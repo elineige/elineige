@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Elin's Resources</title>
+<meta name="description" content="Elin's directory of A.I chat bot making resources: bot personality, bio graphics, CSS and proxies.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pangolin&family=VT323&display=swap" rel="stylesheet">
+<style>
+/* ═══ PALETTE (same as gakuensai_elin)
+     #18226b navy deep     #24379a navy mid     #3a5bc7 navy light   #1b2878 navy panel
+     #cfe0ff frame blue    #8fd0ff sky          #6c7598 picture ring  #e79ad6 title pink
+     #ead77a yellow bar    #eaa2cb pill pink    #26358f pill outline  #3fb3b0 number teal
+     #f6e7b8 cream pill    #34374a pill edge    #d6e6ff pill ring     #f6b6d6 link pink
+     #8e97b5 page grey     #a6aecb page dots    #fbe0ee heart rim     #e98ab8 heart fill */
+:root {
+  --navy-deep: #18226b;
+  --navy-mid: #24379a;
+  --navy-light: #3a5bc7;
+  --navy-panel: #1b2878;
+  --frame: #cfe0ff;
+  --sky: #8fd0ff;
+  --ring: #6c7598;
+  --title-pink: #e79ad6;
+  --yellow-bar: #ead77a;
+  --pill-pink: #eaa2cb;
+  --pill-line: #26358f;
+  --teal: #3fb3b0;
+  --cream: #f6e7b8;
+  --cream-hover: #fffbe8;
+  --edge: #34374a;
+  --pale-ring: #d6e6ff;
+  --link-pink: #f6b6d6;
+  --heart-rim: #fbe0ee;
+  --heart-fill: #e98ab8;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: #ffffff;
+  font-family: 'VT323', monospace;
+  font-size: 1.3rem;
+  line-height: 1.25;
+  /* blue-grey dotted page, like the profile */
+  background-color: #8e97b5;
+  background-image:
+    radial-gradient(circle, #a6aecb 0 3px, transparent 3.5px),
+    radial-gradient(circle, #a6aecb 0 3px, transparent 3.5px);
+  background-size: 28px 28px;
+  background-position: 0 0, 14px 14px;
+}
+::selection { background: var(--heart-fill); color: #ffffff; }
+::-webkit-scrollbar { width: 12px; }
+::-webkit-scrollbar-track { background: var(--navy-deep); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--frame) 0%, var(--sky) 100%);
+  border: 2px solid var(--navy-deep);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #ffe3f1 0%, var(--link-pink) 100%); }
+a { color: var(--link-pink); }
+a:hover { color: #ffffff; }
+:focus-visible { outline: 3px solid var(--sky); outline-offset: 3px; }
+
+/* still picture behind the top of the page, fading into the dots */
+.page-bg {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: -1;
+  width: 100%;
+  height: 720px;
+  object-fit: cover;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(180deg, #000 0 55%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0 55%, transparent 100%);
+}
+
+.wrap {
+  width: min(1040px, 100%);
+  margin: 0 auto;
+  padding: 40px 16px 48px;
+}
+
+/* the navy window (same frame as the profile's tab window) */
+.window {
+  background: linear-gradient(180deg, var(--navy-mid) 0%, var(--navy-panel) 60%, var(--navy-deep) 100%);
+  border: 3px solid var(--frame);
+  border-radius: 16px;
+  outline: 3px solid var(--navy-deep);
+}
+
+/* ═══ STYLISED TITLE TEXT: pink letters, white stroke ═══ */
+.title-text {
+  color: var(--title-pink);
+  font-family: 'Pangolin', sans-serif;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow:
+    2px 0 0 #ffffff, -2px 0 0 #ffffff, 0 2px 0 #ffffff, 0 -2px 0 #ffffff,
+    2px 2px 0 #ffffff, -2px -2px 0 #ffffff, 2px -2px 0 #ffffff, -2px 2px 0 #ffffff;
+}
+
+/* ═══ HEADER: banner, round pfp, name, bio, socials ═══ */
+.profile { padding: 18px 18px 22px; }
+/* pictures use the profile pfp's frame: white border + slate ring */
+.banner {
+  display: block;
+  width: 100%;
+  height: clamp(130px, 22vw, 210px);
+  object-fit: cover;
+  object-position: center 40%;
+  background: #b9c0d8;
+  border: 4px solid #ffffff;
+  border-radius: 16px;
+  outline: 3px solid var(--ring);
+}
+.profile-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0 22px;
+  padding: 0 6px;
+}
+.pfp {
+  display: block;
+  width: clamp(120px, 17vw, 170px);
+  aspect-ratio: 1;
+  margin-top: calc(clamp(120px, 17vw, 170px) * -0.45);
+  position: relative;
+  z-index: 1;
+  object-fit: cover;
+  object-position: center top;
+  background: #b9c0d8;
+  border: 4px solid #ffffff;
+  border-radius: 50%;
+  outline: 3px solid var(--ring);
+}
+.profile-text { min-width: 0; padding-top: 10px; }
+.name {
+  margin: 0 0 6px;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  line-height: 1;
+}
+.bio { margin: 0 0 16px; font-size: 1.25rem; }
+
+/* socials: cream menu pills with a dark edge (the profile's creator pills) */
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 16px;
+  margin: 0;
+  padding: 7px 7px 4px;
+  list-style: none;
+}
+.socials, .foot { isolation: isolate; } /* keeps the pills' dark edge layer above the window */
+.cream-pill {
+  position: relative;
+  display: inline-block;
+  padding: 4px 16px 5px;
+  background: var(--cream);
+  border: 2px solid #2c2f3d;
+  border-radius: 10px;
+  outline: 3px solid var(--pale-ring);
+  color: #1d2a88;
+  font-family: 'Pangolin', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+.cream-pill::after { /* dark outer edge */
+  content: "";
+  position: absolute;
+  inset: -6.5px;
+  z-index: -1;
+  background: var(--edge);
+  border-radius: 15px;
+  pointer-events: none;
+}
+.cream-pill[href]:hover { background: var(--cream-hover); color: #1d2a88; }
+.cream-pill:not([href]) { cursor: default; }
+
+/* ═══ PIXEL HEART (11 x 10 grid): rim, fill, shine ═══ */
+.heart {
+  position: relative;
+  display: block;
+  flex: 0 0 auto;
+  width: 22px;
+  height: 20px;
+  background: var(--heart-rim);
+  clip-path: polygon(18.18% 0, 45.45% 0, 45.45% 10%, 54.55% 10%, 54.55% 0, 81.82% 0, 81.82% 10%, 90.91% 10%, 90.91% 20%, 100% 20%, 100% 50%, 90.91% 50%, 90.91% 60%, 81.82% 60%, 81.82% 70%, 72.73% 70%, 72.73% 80%, 63.64% 80%, 63.64% 90%, 54.55% 90%, 54.55% 100%, 45.45% 100%, 45.45% 90%, 36.36% 90%, 36.36% 80%, 27.27% 80%, 27.27% 70%, 18.18% 70%, 18.18% 60%, 9.09% 60%, 9.09% 50%, 0 50%, 0 20%, 9.09% 20%, 9.09% 10%, 18.18% 10%);
+}
+.heart::before,
+.heart::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.heart::before {
+  background: var(--heart-fill);
+  clip-path: polygon(18.18% 10%, 45.45% 10%, 45.45% 20%, 54.55% 20%, 54.55% 10%, 81.82% 10%, 81.82% 20%, 90.91% 20%, 90.91% 50%, 81.82% 50%, 81.82% 60%, 72.73% 60%, 72.73% 70%, 63.64% 70%, 63.64% 80%, 54.55% 80%, 54.55% 90%, 45.45% 90%, 45.45% 80%, 36.36% 80%, 36.36% 70%, 27.27% 70%, 27.27% 60%, 18.18% 60%, 18.18% 50%, 9.09% 50%, 9.09% 20%, 18.18% 20%);
+}
+.heart::after {
+  background: #ffffff;
+  clip-path: polygon(18.18% 20%, 36.36% 20%, 36.36% 30%, 27.27% 30%, 27.27% 40%, 18.18% 40%);
+}
+
+/* ═══ TABS (only "Resources" for now) ═══ */
+.tabs { margin-top: 34px; }
+.tab-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-left: 10px;
+}
+.tab {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 -3px;
+  padding: 10px 22px 12px 14px;
+  background: linear-gradient(180deg, var(--navy-light) 0%, var(--navy-mid) 100%);
+  border: 3px solid var(--frame);
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
+  color: #ffffff;
+  font-family: 'Pangolin', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+.panel {
+  position: relative;
+  z-index: 1;
+  padding: 20px 24px 26px;
+  border-radius: 0 16px 16px 16px;
+}
+
+/* heading on a yellow bar running in from the panel's left edge */
+.heading {
+  display: inline-block;
+  margin: 0 0 18px -24px;
+  padding: 6px 48px 10px 28px;
+  background: linear-gradient(180deg, transparent 0 30%, var(--yellow-bar) 30% 100%);
+  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+  line-height: 1.2;
+}
+
+/* ═══ SECTION PILLS: pink genre pills with teal 01 / 02 numbers ═══ */
+.section-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 22px;
+  padding: 0;
+  list-style: none;
+}
+.section-pill {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 5px 18px 4px 14px;
+  background: var(--pill-pink);
+  border: 2px solid var(--pill-line);
+  border-radius: 999px;
+  color: #1a2780;
+  font-family: 'Pangolin', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  text-shadow:
+    1.5px 0 0 #ffffff, -1.5px 0 0 #ffffff, 0 1.5px 0 #ffffff, 0 -1.5px 0 #ffffff,
+    1px 1px 0 #ffffff, -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.num {
+  color: var(--teal);
+  font-family: 'Pangolin', sans-serif;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow:
+    2px 0 0 #ffffff, -2px 0 0 #ffffff, 0 2px 0 #ffffff, 0 -2px 0 #ffffff,
+    2px 2px 0 #ffffff, -2px -2px 0 #ffffff, 2px -2px 0 #ffffff, -2px 2px 0 #ffffff;
+}
+.section-pill:hover { background: #f4bedc; color: #1a2780; transform: translateY(-2px); }
+/* the open section: lit up with a white ring, like the selected save */
+.section-pill[aria-selected="true"] {
+  background: #ffd3ea;
+  outline: 3px solid #ffffff;
+  outline-offset: 1px;
+}
+
+/* ═══ SECTION BODY ═══ */
+.section { font-size: 1.25rem; }
+.js .section[hidden] { display: none; }
+.section > :last-child { margin-bottom: 0; }
+.section p { margin: 0 0 14px; }
+.section b { color: var(--sky); font-weight: 400; }
+.section i { color: var(--link-pink); font-style: normal; }
+.section mark {
+  padding: 0 4px;
+  background: linear-gradient(180deg, transparent 0 25%, rgba(234, 215, 122, 0.35) 25% 100%);
+  color: #fff3b8;
+}
+.note mark { padding: 0; background: none; }
+.subhead {
+  margin: 26px 0 12px;
+  color: #5fd6d2;
+  font-family: 'Pangolin', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.subhead:first-child { margin-top: 0; }
+.subhead::after { /* thin frame-blue rule */
+  content: "";
+  display: block;
+  height: 2px;
+  margin-top: 6px;
+  background: linear-gradient(90deg, var(--frame), transparent);
+}
+code {
+  display: block;
+  margin: 8px 0 4px;
+  padding: 10px 12px;
+  background: #0f1a58;
+  border: 2px solid var(--frame);
+  border-radius: 10px;
+  color: var(--frame);
+  font-family: 'VT323', monospace;
+  font-size: 1.1rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.note {
+  margin: 0 0 18px;
+  padding: 10px 16px;
+  background: rgba(143, 208, 255, 0.08);
+  border: 2px solid var(--sky);
+  border-radius: 8px;
+}
+
+/* resource rows: sky box + pixel heart on hover, like the profile's list */
+.list {
+  margin: 0 0 6px;
+  padding: 0;
+  list-style: none;
+}
+.list li {
+  position: relative;
+  margin: 0 0 8px;
+  padding: 6px 12px 8px 40px;
+  border: 2px solid transparent;
+  border-radius: 6px;
+}
+.list li::before,
+.list li::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 0.55em;
+  width: 22px;
+  height: 20px;
+}
+.list li::before {
+  background: var(--heart-rim);
+  clip-path: polygon(18.18% 0, 45.45% 0, 45.45% 10%, 54.55% 10%, 54.55% 0, 81.82% 0, 81.82% 10%, 90.91% 10%, 90.91% 20%, 100% 20%, 100% 50%, 90.91% 50%, 90.91% 60%, 81.82% 60%, 81.82% 70%, 72.73% 70%, 72.73% 80%, 63.64% 80%, 63.64% 90%, 54.55% 90%, 54.55% 100%, 45.45% 100%, 45.45% 90%, 36.36% 90%, 36.36% 80%, 27.27% 80%, 27.27% 70%, 18.18% 70%, 18.18% 60%, 9.09% 60%, 9.09% 50%, 0 50%, 0 20%, 9.09% 20%, 9.09% 10%, 18.18% 10%);
+}
+.list li::after {
+  background: linear-gradient(#ffffff, #ffffff) 4px 4px / 4px 2px no-repeat, linear-gradient(#ffffff, #ffffff) 4px 6px / 2px 2px no-repeat, var(--heart-fill);
+  clip-path: polygon(18.18% 10%, 45.45% 10%, 45.45% 20%, 54.55% 20%, 54.55% 10%, 81.82% 10%, 81.82% 20%, 90.91% 20%, 90.91% 50%, 81.82% 50%, 81.82% 60%, 72.73% 60%, 72.73% 70%, 63.64% 70%, 63.64% 80%, 54.55% 80%, 54.55% 90%, 45.45% 90%, 45.45% 80%, 36.36% 80%, 36.36% 70%, 27.27% 70%, 27.27% 60%, 18.18% 60%, 18.18% 50%, 9.09% 50%, 9.09% 20%, 18.18% 20%);
+}
+.list .item-title {
+  display: inline-block;
+  margin-bottom: 2px;
+  color: #5fd6d2;
+  font-family: 'Pangolin', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.list .item-title a { color: #5fd6d2; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.list .item-title a:hover { color: #ffffff; }
+/* FREE / PAID tag */
+.tag {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 0 9px 1px;
+  border-radius: 999px;
+  font-family: 'Pangolin', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  vertical-align: 2px;
+}
+.tag-free { background: var(--cream); color: #1d2a88; }
+.tag-paid { background: var(--pill-pink); color: #1a2780; }
+
+/* numbered lists: 01, 02... in teal with a white outline (no hover heart) */
+.steps {
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+.steps li {
+  position: relative;
+  margin: 0 0 6px;
+  padding: 2px 0 2px 2.6em;
+  counter-increment: step;
+}
+.steps li::before {
+  content: counter(step, decimal-leading-zero);
+  position: absolute;
+  left: 0.3em;
+  top: 0.15em;
+  color: var(--teal);
+  font-family: 'Pangolin', sans-serif;
+  font-size: 0.95em;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow:
+    2px 0 0 #ffffff, -2px 0 0 #ffffff, 0 2px 0 #ffffff, 0 -2px 0 #ffffff,
+    2px 2px 0 #ffffff, -2px -2px 0 #ffffff, 2px -2px 0 #ffffff, -2px 2px 0 #ffffff;
+}
+
+/* footer */
+.foot {
+  margin-top: 30px;
+  text-align: center;
+  color: var(--navy-deep);
+  font-size: 1.15rem;
+}
+.foot p { margin: 14px 0 0; }
+.foot .foot-small { margin-top: 2px; font-size: 0.95rem; opacity: 0.8; }
+
+/* ═══ PHONE ═══ */
+@media (max-width: 640px) {
+  .wrap { padding-top: 24px; }
+  .profile { padding: 14px 12px 18px; }
+  .profile-row { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  .pfp { width: 120px; margin-top: -60px; }
+  .socials { justify-content: center; }
+  .panel { padding: 18px 16px 22px; }
+  .heading { margin-left: -16px; padding-left: 20px; padding-right: 32px; }
+  .section-pills { gap: 10px; }
+  .section-pill { font-size: 0.9rem; padding: 4px 14px 3px 11px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .section-pill { transition: none; }
+}
+</style>
+</head>
+<body>
+<!-- BACKGROUND: swap the src for any picture you like -->
+<img class="page-bg" src="https://ella.janitorai.com/media-approved/cmhD4H0G7tOXS9Mii_2uD.webp" alt="">
+
+<div class="wrap">
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="profile window">
+    <!-- BANNER: swap the src for your banner picture -->
+    <img class="banner" src="https://ella.janitorai.com/media-approved/cmhD4H0G7tOXS9Mii_2uD.webp" alt="">
+    <div class="profile-row">
+      <img class="pfp" src="https://ella.janitorai.com/media-approved/pftwjbTu1T6RtOqw3_SU_.webp" alt="Elin's profile picture">
+      <div class="profile-text">
+        <h1 class="name title-text">Elin</h1>
+        <p class="bio">This is Elin, your chill gooner from Etivac, 🇵🇭. Main directory for all my A.I chat bot making stuff and resources I use and where else you can find me.</p>
+        <ul class="socials" aria-label="Find me elsewhere">
+          <li><a class="cream-pill" href="https://elineige.carrd.co/">Carrd</a></li>
+          <li><a class="cream-pill" href="https://janitorai.com/profiles/02a3ad25-f6cc-40d9-9c3a-a396ea01628b_profile-of-elineige">Janitor</a></li>
+          <li><a class="cream-pill" href="https://saucepan.ai/u/elineige/home">Saucepan</a></li>
+          <li><a class="cream-pill" href="https://app.wyvern.chat/profiles/elineige">Wyvern</a></li>
+          <li><a class="cream-pill" href="https://ph.pinterest.com/elineige/">Pinterest</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ RESOURCES TAB ═══ -->
+  <main class="tabs">
+    <div class="tab-bar">
+      <h2 class="tab"><span class="heart" aria-hidden="true"></span>Resources</h2>
+    </div>
+    <div class="panel window">
+      <div class="heading title-text" id="section-heading">Bot Personality</div>
+
+      <ul class="section-pills" role="tablist" aria-label="Resource sections">
+        <li role="presentation"><a class="section-pill" role="tab" id="tab-bots" href="#bots" aria-controls="bots" aria-selected="true"><span class="num">01</span>Bot Personality</a></li>
+        <li role="presentation"><a class="section-pill" role="tab" id="tab-graphics" href="#graphics" aria-controls="graphics" aria-selected="false"><span class="num">02</span>Bio and Graphics</a></li>
+        <li role="presentation"><a class="section-pill" role="tab" id="tab-css" href="#css" aria-controls="css" aria-selected="false"><span class="num">03</span>CSS</a></li>
+        <li role="presentation"><a class="section-pill" role="tab" id="tab-proxy" href="#proxy" aria-controls="proxy" aria-selected="false"><span class="num">04</span>Proxy</a></li>
+      </ul>
+
+      <!-- 01 BOT PERSONALITY -->
+      <section class="section" id="bots" role="tabpanel" aria-labelledby="tab-bots" data-title="Bot Personality">
+        <p>What I use when I make my bots, bio graphics and CSS. Free info, no need to pay :P</p>
+        <ul class="list">
+          <li><span class="item-title">Bot Personality Template</span><br>
+            I use a modified version of Kolach3's and heavily tweaked it to my liking, yoink it from my bot card and feel free to use it. I also recommend checking out <a href="https://iotemplate.uwu.ai/">Io's</a>, <a href="https://janitorai.com/profiles/7687620e-17a6-4fe1-9b72-36bd6f564330_profile-of-sepha">Sepha's</a>, and <a href="https://janitorai.com/profiles/db9561b7-6a39-4923-9452-ba34c0464844_profile-of-darkmountain">Memi's</a> bot formats. Test your bots out to see which one fits your liking. Different models and prompts produce varying results, so test in multiple ones and check if the character acts how you envisioned it.</li>
+          <li><span class="item-title"><a href="https://puppywastaken.github.io/JAI-Lorebook-Converter/">Puppy/Permanent's JAI Lorebook to JSON Converter</a></span><br>
+            I use this to convert my Janitor lorebooks into <a href="https://docs.sillytavern.app/">Silly Tavern</a> compatible JSON lorebook files since I don't have that front end. This lets you save and port it elsewhere. Doesn't work for advanced lorebooks though.</li>
+          <li><span class="item-title"><a href="https://agnai.chat/">Character Card Creator</a></span><br>
+            I use this to create character cards to export my bots and as an archive of my bots. You can attach the lorebook you exported from Janitor to the cards you make here, and paste your bot bio into the Creator's Notes field. Mainly for users and bot creators that don't have that other front end (Silly Tavern).</li>
+          <li><span class="item-title"><a href="https://www.onelook.com/thesaurus?loc=revfp&amp;s=joyful">Thesaurus</a></span><br>
+            For writing your intros and bots. Looking for a word? This lists out every word associated with it, along with its opposites.</li>
+          <li><span class="item-title"><a href="https://www.jonesnovelediting.com/blog/romance-tropes">Tropes List</a></span><br>
+            Name the tropes in your bot so users get an easy overview of what they're getting into, or find interesting ones to combine.</li>
+        </ul>
+      </section>
+
+      <!-- 02 BIO AND GRAPHICS -->
+      <section class="section" id="graphics" role="tabpanel" aria-labelledby="tab-graphics" data-title="Bio and Graphics">
+        <p>In this section, I'll yap about how you can create basic custom banners, color contrast, and basic layouts that you can apply to your JAI bot bios or anywhere else. My purpose here is to save you money and create non-templated graphics.</p>
+        <p class="note"><mark>What works for me might not work for you, so feel free to modify and explore!</mark></p>
+
+        <h3 class="subhead">Editing Program</h3>
+        <p>While there are some programs out there, I'm recommending <b><a href="https://www.affinity.studio/">Affinity Studio by Canva</a></b>. It's free editing software with no subscription, ads, etc. and works just as well as Photoshop.</p>
+        <p>I know Canva has a free mode but it won't let you export graphics with a transparent BG. A workaround is to use a colored background and a background remover site to clean it up for you, but sometimes it just doesn't work, so this is the alternative I'm offering.</p>
+        <p>If you're a Canva user, I believe it also has some features tied to Canva, like the AI generative part that PS has. I'm just unsure which ones since I don't use Canva.</p>
+        <p>If you're completely new to editing software, it might be a bit of a learning curve but there are a lot of tutorials on YT that you can learn from.</p>
+        <p>When I have the time, I'll make a step by step basic tutorial on how to make your own graphics with Affinity Studio + a downloadable template file you can play around with to make your own.</p>
+
+        <h3 class="subhead">Layouting Text Content</h3>
+        <p>When presenting your content, like in bot bios, it's best to prioritize what the user wants to know and put the rest of the "nice to know" near the end. You're free to rearrange it, but I usually go with this:</p>
+        <ol class="steps">
+          <li>Hook line to draw users in to the bot and/or followed by an overview of the premise</li>
+          <li>Warnings</li>
+          <li>Who is Char</li>
+          <li>About User/User's Role</li>
+          <li>Other important stuff</li>
+          <li>Scenarios</li>
+          <li>Image Gallery (I usually support these with captions on each image)</li>
+          <li>World Lore/Supporting Info</li>
+          <li>Yap section/Author's Notes</li>
+        </ol>
+        <p>When presenting information, make it concise. Ensure everything is chunked down and not information overload/wall of text.</p>
+        <p>On lore-heavy bots, I add just enough information to not overwhelm the user, with a brief world lore/info they can explore further by clicking on the lorebook/lore site if they want to know more. For example, instead of <i>"The Land of Fruits has 10 countries: the apple, the orange, the kiwi, etc..."</i> just go with <i>"The Land of Fruits is a dark fantasy world with 10 countries named after fruits."</i></p>
+        <p><b>In summary:</b> curate the context in a way that's still authentic to who and what your bot is about, without making it way too intimidating for a user to interact with. Break up walls of text into paragraphs and present key information first, then "nice to know" content towards the bottom.</p>
+
+        <h3 class="subhead">Images</h3>
+        <ul class="list">
+          <li><span class="item-title"><a href="https://nijijourney.com/">Nijijourney</a></span><span class="tag tag-paid">PAID</span><br>
+            For image gens, most of the semi-realistic painterly style you see over on Janitor. Creators mostly use a mix of Niji 6 and Niji 7. When I started out, I used this prompt for my old bot Lori (<a href="https://ph.pinterest.com/pin/1062145893395986790/">see the result</a>):
+            <code>Semi realistic, high quality, super close up portrait of a girl with straight strawberry blonde hair, visible forehead, wearing white strapless tube top, lean body, sharp green eyes, neutral small smile expression, carrying a white ragdoll cat to her face, college, dynamic pose, green and pink jacket, professional lighting, gym pool background --no necklace, piercing, earrings, bangs, fringe, real human, realistic, accessories --ar 9:16 --raw --profile gj5hjlq 9f7lk6w qzicztl iup1k24 abjrwji --stylize 1000 --niji 6</code>
+            The profile codes affect the style of the result, so try each code on its own to see how it looks. You can also make your own style/code by voting on images and experimenting with prompts (I currently use my own code with the Niji 7 profile) and also by attaching reference image styles. I've had good experience in using tensor gens as ref with niji. The same code above works nicely for male images and landscapes too.<br><br>
+            For orientation, I use <i>1:1</i> for bot images for that perfect square framing on bot cards; <i>3:4</i> and <i>9:16</i> also worked for me in the past. For landscapes, <i>16:9</i>. The Standard Plan should be enough if you plan to get serious about bot making. If you don't want your images and prompts yoinked from the trending page, split a Pro Plan (comes with stealth mode) with friends, or trash your gens to hide them from your Niji profile. The trending image will still show up on Standard and below though.</li>
+          <li><span class="item-title"><a href="https://tensor.art/">Tensor Art</a></span><br>
+            Another A.I image generator, more complicated than Niji in my opinion! I go to the Home page &gt; browse Models &gt; scroll down a model's page to its public posts, hover over one and click the green Remix button, then change up the prompt to your liking. Please read the creator's notes/bio first to check if remixing is okay! 9 out of 10, they'll just ask you to change the prompt because some of them also use it for bot creation.<br><br>
+            For Niji-looking creations, check out <a href="https://www.reddit.com/r/JanitorAI_Official/comments/1vbg7jc/lyras_tensorai_guide_part_6_ai_images_style_dump/">Lyra's guides</a> and <a href="https://tensor.art/u/730781637645852707">Lyra's profile</a>. I also have a few posts and remixes on <a href="https://tensor.art/u/899941654046224260">my profile</a> you can try. Not Niji-looking, just fun ones I like to use for my OCs!</li>
+        </ul>
+
+        <h3 class="subhead">Color</h3>
+        <ul class="list">
+          <li><span class="item-title"><a href="https://mycolor.space/">Color Palette Generator</a></span><br>
+            Generates color palettes from a single color you like. It saves your session locally, so the last color you checked is there the next time you visit.</li>
+          <li><span class="item-title"><a href="https://coolors.co/contrast-checker/112a46-1d0c31">Color Contrast Checker</a></span><br>
+            If you like colorful bios, run them through a contrast checker to make sure they're still readable.</li>
+          <li><span class="item-title"><a href="https://coolors.co/visualizer">Palette Visualizer</a></span><br>
+            Check if your color palette works out in real time. For CSS, I dump the colors in :root so I can edit them all at once, then apply the actual colors to the classes when I'm done.</li>
+        </ul>
+
+        <h3 class="subhead">Bio Tools</h3>
+        <ul class="list">
+          <li><span class="item-title"><a href="https://puppywastaken.github.io/JAI-Bio-Builder/">Puppy/Permanent's JAI Bio Builder</a></span><br>
+            Edit your bot bios with a real time preview without Janitor's own editor making the code look weird. Try out the fancy box style classes, or paste in your bot's bio and it'll beautify the code layout for you.</li>
+          <li><span class="item-title"><a href="https://discord.com/channels/563783473115168788/1386780919670505554/1523882754104754276">Ready to Use Bot Bio Templates</a></span><br>
+            Long day and you don't wanna think about all this jazz? I gotchu fam. The CSS-forums on the official Janitor Discord have bios made by other users. It's basic courtesy to give credit if they ask for it.</li>
+        </ul>
+      </section>
+
+      <!-- 03 CSS -->
+      <section class="section" id="css" role="tabpanel" aria-labelledby="tab-css" data-title="CSS">
+        <p class="note">A tip from someone who does front-end work and is a Janitor user: keep your profile relevant top to bottom. Bots first, then your content and boundaries, then everything else (gallery, etc.). Skip heavy moving parts unless they bring value to your content, otherwise they're mostly clutter for visitors. If you're hiring someone to build your profile, it's worth asking whether they use AI. Plenty of people are fine with it, and I've got no problem with sellers who disclose it upfront. But paying a premium for something that was prompted together without being told is deceptive, so always ask first!</p>
+        <ul class="list">
+          <li><span class="item-title"><a href="https://rentry.co/jaielements">Puppy/Permanent's JAI Page Breakdown</a></span><br>
+            I use this to identify the classes and selectors to target and edit on Janitor.</li>
+          <li><span class="item-title"><a href="https://jai-css-guide-resources.ju.mp/">JAI CSS Collection</a></span><br>
+            JAI CSS Resources Guide by Rae, Puppy, and Cyanoide, with sample code you can use. A link to the CSS-Forums is in there too.</li>
+          <li><span class="item-title"><a href="https://freefrontend.com/css-code-examples/">Free Front End</a></span><br>
+            View and try code examples as a base and see how you can work them into your CSS vision. There's a LOT in here gang.</li>
+          <li><span class="item-title">SVG Editors</span><br>
+            Want fancy borders on your bot cards, or an image for your notification icon? Pick an SVG and download it from any SVG site. Resize it to the size you need and upload it to <a href="https://picsvg.com/">Pic to SVG</a> with Filters set to Internal. Copy the SVG code (all the numbers and letters, without the symbols and the word path, e.g. <i>M347 333 c-5</i>...) and paste it into the <a href="https://yqnn.github.io/svg-path-editor/">SVG Path Editor</a>. Set scale X and Y to .1 and rotate to 180. If there's anything to tweak I use <a href="https://puppywastaken.github.io/puppypaths/">Puppy's Path Editor</a>. Finally, paste the final code into your CSS.</li>
+          <li><span class="item-title"><a href="https://css-shape.com/">CSS Shapes</a></span><br>
+            A list of fancy shapes you can make with CSS.</li>
+          <li><span class="item-title"><a href="https://grid.layoutit.com/">CSS Grid Layout Tool</a></span><br>
+            I visualize my grids here and yoink the generated code to work on as a base.</li>
+          <li><span class="item-title"><a href="https://annabellecaprine.github.io/AnansiProfileEditor/">Janitor CSS Visual Editor by Fechin</a></span><br>
+            A visual editor where you can make adjustments and slap it on your JAI profile.</li>
+          <li><span class="item-title"><a href="https://tools.from-avalon.com/janitor-profile-maker/">Janitor Profile Maker by Eslezer</a></span><br>
+            Another visual editor you can tweak and add to your JAI profile! This one has full ready-to-use templates you can modify, like an Instagram-looking profile :D</li>
+        </ul>
+      </section>
+
+      <!-- 04 PROXY -->
+      <section class="section" id="proxy" role="tabpanel" aria-labelledby="tab-proxy" data-title="Proxy">
+        <p>In this section, I'll yap about models and prompts and give an overview based on my experience and observations. Proceed if you already know how to add a model/custom proxy on JAI/SP.</p>
+        <p class="note"><mark>What works for me might not work for you, so feel free to modify and explore!</mark></p>
+
+        <h3 class="subhead">Models</h3>
+        <p><b>What are models?</b><br>
+          Models are programs trained on different things and built with pattern recognition based on the stuff they're trained on. Some are trained to be better at coding (HTML, CSS, JavaScript, etc.), problem solving, or content writing. Once they're fed information, they break it down, apply what they've been trained on, and put out a response appropriate to what was asked of them.</p>
+        <p>Not all models under the same name function the same. For example, Kimi 2.5 is good at content writing but not as good as Kimi 2.7 Code at coding a website.</p>
+        <p>I currently use <b>Kimi</b>, <b>Deepseek</b>, and <b>GLM</b> models at <b>0.6</b> temp. As of writing this, I like using Kimi Code 2.7 and DS 0813 in my RPs.</p>
+
+        <h3 class="subhead">Trying out Custom Providers</h3>
+        <p>As someone who lives in SE Asia, I refuse to spend more on an A.I hobby, so I try to get the most bang for my buck by finding platforms that offer a subscription with a lot of models included.</p>
+        <p>I've tried OpenRouter, Chutes, and as of writing this, I'm currently subbed on <a href="https://nano-gpt.com/">Nano-GPT</a>.</p>
+        <p>If you're not a heavy RPer/user, it's better to go on a top-up/pay-as-you-go basis than to sub. And if you're loyal to one model, like Deepseek or GLM, it's always better to go directly to the source. Some, like Deepseek, offer cheaper prices during off-peak hours.</p>
+        <p><b>Tips to look out for when exploring a new provider</b></p>
+        <ol class="steps">
+          <li>Some platforms give you a free trial, try them out first before committing.</li>
+          <li>Check for service stability and the number of models offered. If it's super cheap and offers models like Claude, get sussy. Chances are that place is gonna get nuked in the future or shut down as soon as they reach their quota of information extracted.</li>
+          <li>While free is good, most of them extract and sell your info or do other shady stuff.</li>
+        </ol>
+        <p><mark>Bottomline:</mark> while most or all of them might be extracting your info and selling it to who knows what, just pick the ones least likely to leak your 10 inch mafia CEO RP to the Facebook or Instagram account tied to the email you used to register on their site (,; ⩌ ;,)</p>
+
+        <h3 class="subhead">Prompts</h3>
+        <p>I use a modified <b><a href="https://cheesey-wizards-organization.gitbook.io/masterlist/prompts-and-troubleshooting/my-prompt">Cheese/Saturnine</a></b> prompt. Adding the NSFW prompt can get the bot unnecessarily horny depending on the model you're using.</p>
+        <p>In my experience, the base general prompt works great on its own and is one of the better jailbreaks out there.</p>
+        <p>I don't really mess with the Advanced Settings (Top K, Top P, etc.) since I test my bots a lot.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <a class="cream-pill" href="https://janitorai.com/profiles/02a3ad25-f6cc-40d9-9c3a-a396ea01628b_profile-of-elineige">Back to Elin's profile</a>
+    <p>© Elineige</p>
+    <p class="foot-small">Ported to github with A.I Assistance because I'm clueless LMAO</p>
+  </footer>
+</div>
+
+<script>
+/* section pills: show one section at a time. Without JS every section shows, one under another. */
+(function () {
+  document.documentElement.classList.add('js');
+  var pills = Array.prototype.slice.call(document.querySelectorAll('.section-pill'));
+  var heading = document.getElementById('section-heading');
+
+  function show(id, focus) {
+    var found = false;
+    pills.forEach(function (pill) {
+      var on = pill.getAttribute('aria-controls') === id;
+      if (on) found = true;
+      pill.setAttribute('aria-selected', on ? 'true' : 'false');
+      pill.tabIndex = on ? 0 : -1;
+      var panel = document.getElementById(pill.getAttribute('aria-controls'));
+      panel.hidden = !on;
+      if (on) {
+        heading.textContent = panel.getAttribute('data-title');
+        if (focus) pill.focus();
+      }
+    });
+    return found;
+  }
+
+  pills.forEach(function (pill, i) {
+    pill.addEventListener('click', function (e) {
+      e.preventDefault();
+      var id = pill.getAttribute('aria-controls');
+      show(id);
+      history.replaceState(null, '', '#' + id);
+    });
+    pill.addEventListener('keydown', function (e) {
+      var next = null;
+      if (e.key === 'ArrowRight') next = pills[(i + 1) % pills.length];
+      if (e.key === 'ArrowLeft') next = pills[(i - 1 + pills.length) % pills.length];
+      if (next) {
+        e.preventDefault();
+        var id = next.getAttribute('aria-controls');
+        show(id, true);
+        history.replaceState(null, '', '#' + id);
+      }
+    });
+  });
+
+  /* a link like .../#proxy opens that section */
+  var start = location.hash.slice(1);
+  if (!start || !show(start)) show('bots');
+  window.addEventListener('hashchange', function () { show(location.hash.slice(1)); });
+})();
+</script>
+</body>
+</html>
