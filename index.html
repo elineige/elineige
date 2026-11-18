@@ -9,12 +9,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pangolin&family=VT323&display=swap" rel="stylesheet">
 <style>
-/* ═══ PALETTE (same as gakuensai_elin)
-     #18226b navy deep     #24379a navy mid     #3a5bc7 navy light   #1b2878 navy panel
-     #cfe0ff frame blue    #8fd0ff sky          #6c7598 picture ring  #e79ad6 title pink
-     #ead77a yellow bar    #eaa2cb pill pink    #26358f pill outline  #3fb3b0 number teal
-     #f6e7b8 cream pill    #34374a pill edge    #d6e6ff pill ring     #f6b6d6 link pink
-     #8e97b5 page grey     #a6aecb page dots    #fbe0ee heart rim     #e98ab8 heart fill */
 :root {
   --navy-deep: #18226b;
   --navy-mid: #24379a;
@@ -45,7 +39,6 @@ body {
   font-family: 'VT323', monospace;
   font-size: 1.3rem;
   line-height: 1.25;
-  /* blue-grey dotted page, like the profile */
   background-color: #8e97b5;
   background-image:
     radial-gradient(circle, #a6aecb 0 3px, transparent 3.5px),
@@ -66,7 +59,6 @@ a { color: var(--link-pink); }
 a:hover { color: #ffffff; }
 :focus-visible { outline: 3px solid var(--sky); outline-offset: 3px; }
 
-/* still picture behind the top of the page, fading into the dots */
 .page-bg {
   position: absolute;
   inset: 0 0 auto;
@@ -85,7 +77,6 @@ a:hover { color: #ffffff; }
   padding: 40px 16px 48px;
 }
 
-/* the navy window (same frame as the profile's tab window) */
 .window {
   background: linear-gradient(180deg, var(--navy-mid) 0%, var(--navy-panel) 60%, var(--navy-deep) 100%);
   border: 3px solid var(--frame);
@@ -93,7 +84,6 @@ a:hover { color: #ffffff; }
   outline: 3px solid var(--navy-deep);
 }
 
-/* ═══ STYLISED TITLE TEXT: pink letters, white stroke ═══ */
 .title-text {
   color: var(--title-pink);
   font-family: 'Pangolin', sans-serif;
@@ -104,9 +94,7 @@ a:hover { color: #ffffff; }
     2px 2px 0 #ffffff, -2px -2px 0 #ffffff, 2px -2px 0 #ffffff, -2px 2px 0 #ffffff;
 }
 
-/* ═══ HEADER: banner, round pfp, name, bio, socials ═══ */
 .profile { padding: 18px 18px 22px; }
-/* pictures use the profile pfp's frame: white border + slate ring */
 .banner {
   display: block;
   width: 100%;
@@ -146,7 +134,6 @@ a:hover { color: #ffffff; }
 }
 .bio { margin: 0 0 16px; font-size: 1.25rem; }
 
-/* socials: cream menu pills with a dark edge (the profile's creator pills) */
 .socials {
   display: flex;
   flex-wrap: wrap;
@@ -155,7 +142,7 @@ a:hover { color: #ffffff; }
   padding: 7px 7px 4px;
   list-style: none;
 }
-.socials, .foot { isolation: isolate; } /* keeps the pills' dark edge layer above the window */
+.socials, .foot { isolation: isolate; }
 .cream-pill {
   position: relative;
   display: inline-block;
@@ -172,8 +159,7 @@ a:hover { color: #ffffff; }
   text-decoration: none;
   transition: background 0.15s ease;
 }
-.cream-pill::after { /* dark outer edge */
-  content: "";
+.cream-pill::after {  content: "";
   position: absolute;
   inset: -6.5px;
   z-index: -1;
@@ -184,7 +170,6 @@ a:hover { color: #ffffff; }
 .cream-pill[href]:hover { background: var(--cream-hover); color: #1d2a88; }
 .cream-pill:not([href]) { cursor: default; }
 
-/* ═══ PIXEL HEART (11 x 10 grid): rim, fill, shine ═══ */
 .heart {
   position: relative;
   display: block;
@@ -209,7 +194,6 @@ a:hover { color: #ffffff; }
   clip-path: polygon(18.18% 20%, 36.36% 20%, 36.36% 30%, 27.27% 30%, 27.27% 40%, 18.18% 40%);
 }
 
-/* ═══ TABS (only "Resources" for now) ═══ */
 .tabs { margin-top: 34px; }
 .tab-bar {
   display: flex;
@@ -242,7 +226,6 @@ a:hover { color: #ffffff; }
   border-radius: 0 16px 16px 16px;
 }
 
-/* heading on a yellow bar running in from the panel's left edge */
 .heading {
   display: inline-block;
   margin: 0 0 18px -24px;
@@ -252,7 +235,6 @@ a:hover { color: #ffffff; }
   line-height: 1.2;
 }
 
-/* ═══ SECTION PILLS: pink genre pills with teal 01 / 02 numbers ═══ */
 .section-pills {
   display: flex;
   flex-wrap: wrap;
@@ -292,14 +274,12 @@ a:hover { color: #ffffff; }
     2px 2px 0 #ffffff, -2px -2px 0 #ffffff, 2px -2px 0 #ffffff, -2px 2px 0 #ffffff;
 }
 .section-pill:hover { background: #f4bedc; color: #1a2780; transform: translateY(-2px); }
-/* the open section: lit up with a white ring, like the selected save */
 .section-pill[aria-selected="true"] {
   background: #ffd3ea;
   outline: 3px solid #ffffff;
   outline-offset: 1px;
 }
 
-/* ═══ SECTION BODY ═══ */
 .section { font-size: 1.25rem; }
 .js .section[hidden] { display: none; }
 .section > :last-child { margin-bottom: 0; }
@@ -321,8 +301,7 @@ a:hover { color: #ffffff; }
   letter-spacing: 1px;
 }
 .subhead:first-child { margin-top: 0; }
-.subhead::after { /* thin frame-blue rule */
-  content: "";
+.subhead::after {  content: "";
   display: block;
   height: 2px;
   margin-top: 6px;
@@ -349,7 +328,6 @@ code {
   border-radius: 8px;
 }
 
-/* resource rows: sky box + pixel heart on hover, like the profile's list */
 .list {
   margin: 0 0 6px;
   padding: 0;
@@ -390,7 +368,6 @@ code {
 }
 .list .item-title a { color: #5fd6d2; text-decoration-thickness: 2px; text-underline-offset: 3px; }
 .list .item-title a:hover { color: #ffffff; }
-/* FREE / PAID tag */
 .tag {
   display: inline-block;
   margin-left: 8px;
@@ -405,7 +382,6 @@ code {
 .tag-free { background: var(--cream); color: #1d2a88; }
 .tag-paid { background: var(--pill-pink); color: #1a2780; }
 
-/* numbered lists: 01, 02... in teal with a white outline (no hover heart) */
 .steps {
   margin: 0 0 16px;
   padding: 0;
@@ -433,7 +409,6 @@ code {
     2px 2px 0 #ffffff, -2px -2px 0 #ffffff, 2px -2px 0 #ffffff, -2px 2px 0 #ffffff;
 }
 
-/* footer */
 .foot {
   margin-top: 30px;
   text-align: center;
@@ -443,7 +418,6 @@ code {
 .foot p { margin: 14px 0 0; }
 .foot .foot-small { margin-top: 2px; font-size: 0.95rem; opacity: 0.8; }
 
-/* ═══ PHONE ═══ */
 @media (max-width: 640px) {
   .wrap { padding-top: 24px; }
   .profile { padding: 14px 12px 18px; }
@@ -462,14 +436,14 @@ code {
 </style>
 </head>
 <body>
-<!-- BACKGROUND: swap the src for any picture you like -->
+
 <img class="page-bg" src="https://ella.janitorai.com/media-approved/cmhD4H0G7tOXS9Mii_2uD.webp" alt="">
 
 <div class="wrap">
 
-  <!-- ═══ HEADER ═══ -->
+
   <header class="profile window">
-    <!-- BANNER: swap the src for your banner picture -->
+
     <img class="banner" src="https://ella.janitorai.com/media-approved/cmhD4H0G7tOXS9Mii_2uD.webp" alt="">
     <div class="profile-row">
       <img class="pfp" src="https://ella.janitorai.com/media-approved/pftwjbTu1T6RtOqw3_SU_.webp" alt="Elin's profile picture">
@@ -487,7 +461,7 @@ code {
     </div>
   </header>
 
-  <!-- ═══ RESOURCES TAB ═══ -->
+
   <main class="tabs">
     <div class="tab-bar">
       <h2 class="tab"><span class="heart" aria-hidden="true"></span>Resources</h2>
@@ -502,7 +476,7 @@ code {
         <li role="presentation"><a class="section-pill" role="tab" id="tab-proxy" href="#proxy" aria-controls="proxy" aria-selected="false"><span class="num">04</span>Proxy</a></li>
       </ul>
 
-      <!-- 01 BOT PERSONALITY -->
+
       <section class="section" id="bots" role="tabpanel" aria-labelledby="tab-bots" data-title="Bot Personality">
         <p>What I use when I make my bots, bio graphics and CSS. Free info, no need to pay :P</p>
         <ul class="list">
@@ -519,7 +493,7 @@ code {
         </ul>
       </section>
 
-      <!-- 02 BIO AND GRAPHICS -->
+
       <section class="section" id="graphics" role="tabpanel" aria-labelledby="tab-graphics" data-title="Bio and Graphics">
         <p>In this section, I'll yap about how you can create basic custom banners, color contrast, and basic layouts that you can apply to your JAI bot bios or anywhere else. My purpose here is to save you money and create non-templated graphics.</p>
         <p class="note"><mark>What works for me might not work for you, so feel free to modify and explore!</mark></p>
@@ -579,7 +553,7 @@ code {
         </ul>
       </section>
 
-      <!-- 03 CSS -->
+
       <section class="section" id="css" role="tabpanel" aria-labelledby="tab-css" data-title="CSS">
         <p class="note">A tip from someone who does front-end work and is a Janitor user: keep your profile relevant top to bottom. Bots first, then your content and boundaries, then everything else (gallery, etc.). Skip heavy moving parts unless they bring value to your content, otherwise they're mostly clutter for visitors. If you're hiring someone to build your profile, it's worth asking whether they use AI. Plenty of people are fine with it, and I've got no problem with sellers who disclose it upfront. But paying a premium for something that was prompted together without being told is deceptive, so always ask first!</p>
         <ul class="list">
@@ -602,7 +576,7 @@ code {
         </ul>
       </section>
 
-      <!-- 04 PROXY -->
+
       <section class="section" id="proxy" role="tabpanel" aria-labelledby="tab-proxy" data-title="Proxy">
         <p>In this section, I'll yap about models and prompts and give an overview based on my experience and observations. Proceed if you already know how to add a model/custom proxy on JAI/SP.</p>
         <p class="note"><mark>What works for me might not work for you, so feel free to modify and explore!</mark></p>
@@ -641,7 +615,6 @@ code {
 </div>
 
 <script>
-/* section pills: show one section at a time. Without JS every section shows, one under another. */
 (function () {
   document.documentElement.classList.add('js');
   var pills = Array.prototype.slice.call(document.querySelectorAll('.section-pill'));
@@ -684,7 +657,6 @@ code {
     });
   });
 
-  /* a link like .../#proxy opens that section */
   var start = location.hash.slice(1);
   if (!start || !show(start)) show('bots');
   window.addEventListener('hashchange', function () { show(location.hash.slice(1)); });
